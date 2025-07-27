@@ -1,0 +1,17 @@
+{
+    "config": {
+        "title": "Stout Plus Boiler",
+        "step": {
+            "user": {
+                "title": "Stout Plus Boiler Setup",
+                "description": "Enter the IP address of your boiler",
+                "data": {
+                    "host": "Boiler IP Address"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Failed to connect to the boiler"
+        }
+    }
+}

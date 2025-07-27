@@ -1,0 +1,17 @@
+{
+    "config": {
+        "title": "Котёл Stout Plus",
+        "step": {
+            "user": {
+                "title": "Настройка котла Stout Plus",
+                "description": "Введите IP-адрес вашего котла",
+                "data": {
+                    "host": "IP-адрес котла"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Не удалось подключиться к котлу"
+        }
+    }
+}
