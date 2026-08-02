@@ -31,7 +31,7 @@ class StoutPlusNumberDescription(NumberEntityDescription):
 NUMBERS: tuple[StoutPlusNumberDescription, ...] = (
     StoutPlusNumberDescription(
         key="dhw_target_temperature",
-        name="Domestic hot water target temperature",
+        translation_key="dhw_target_temperature",
         endpoint="main",
         source_key="settedTemperatureOfDHW",
         command="change_dhwtrg",
@@ -43,7 +43,7 @@ NUMBERS: tuple[StoutPlusNumberDescription, ...] = (
     ),
     StoutPlusNumberDescription(
         key="temperature_hysteresis_setting",
-        name="Temperature hysteresis setting",
+        translation_key="temperature_hysteresis_setting",
         endpoint="other",
         source_key="gist",
         command="change_gist",

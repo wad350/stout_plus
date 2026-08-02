@@ -42,22 +42,22 @@ class StoutPlusFormSelectDescription(SelectEntityDescription):
 INDEX_SELECTS: tuple[StoutPlusIndexSelectDescription, ...] = (
     StoutPlusIndexSelectDescription(
         key="operating_mode",
-        name="Operating mode",
+        translation_key="operating_mode",
         endpoint="main",
         source_key="setMode",
         command="switch_mode",
         options=(
-            "Heating",
-            "Weekly schedule",
-            "Room temperature",
-            "Outdoor curve",
-            "Antifreeze",
+            "heating",
+            "weekly_schedule",
+            "room_temperature",
+            "outdoor_curve",
+            "antifreeze",
         ),
         icon="mdi:radiator",
     ),
     StoutPlusIndexSelectDescription(
         key="outdoor_curve",
-        name="Outdoor curve",
+        translation_key="outdoor_curve",
         endpoint="main",
         source_key="SetDepNumber",
         command="change_outtrg",
@@ -66,29 +66,29 @@ INDEX_SELECTS: tuple[StoutPlusIndexSelectDescription, ...] = (
     ),
     StoutPlusIndexSelectDescription(
         key="external_management",
-        name="External management",
+        translation_key="external_management",
         endpoint="other",
         source_key="exManagMode",
         command="switch_manage",
-        options=("Disabled", "OpenTherm", "Thermostat"),
+        options=("disabled", "opentherm", "thermostat"),
         icon="mdi:connection",
     ),
     StoutPlusIndexSelectDescription(
         key="remote_control_source",
-        name="Remote control source",
+        translation_key="remote_control_source",
         endpoint="other",
         source_key="srcMQTT",
         command="mqtt_rem_src",
-        options=("Application", "Telegram"),
+        options=("application", "telegram"),
         icon="mdi:remote",
     ),
     StoutPlusIndexSelectDescription(
         key="warning_sound",
-        name="Relay warning sound",
+        translation_key="warning_sound",
         endpoint="other",
         source_key="warn",
         command="switch_voice",
-        options=("Off", "On"),
+        options=("off", "on"),
         icon="mdi:volume-high",
     ),
 )
@@ -97,26 +97,26 @@ INDEX_SELECTS: tuple[StoutPlusIndexSelectDescription, ...] = (
 FORM_SELECTS: tuple[StoutPlusFormSelectDescription, ...] = (
     StoutPlusFormSelectDescription(
         key="anti_legionella_temperature",
-        name="Anti-legionella temperature",
+        translation_key="anti_legionella_temperature",
         source_key="Antil_temp",
         command="apply_alig_page",
-        options=("60 °C", "70 °C"),
+        options=("60_c", "70_c"),
         payload_values=("60°C", "70°C"),
         icon="mdi:thermometer-high",
     ),
     StoutPlusFormSelectDescription(
         key="anti_legionella_weekday",
-        name="Anti-legionella weekday",
+        translation_key="anti_legionella_weekday",
         source_key="Antil_wday_str",
         command="apply_alig_page",
         options=(
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
         ),
         payload_values=(
             "Понедельник",
@@ -131,10 +131,10 @@ FORM_SELECTS: tuple[StoutPlusFormSelectDescription, ...] = (
     ),
     StoutPlusFormSelectDescription(
         key="pump_overrun",
-        name="Pump overrun",
+        translation_key="pump_overrun",
         source_key="PumpLag",
         command="apply_other_page",
-        options=("Continuous", "5 minutes", "10 minutes", "15 minutes"),
+        options=("continuous", "minutes_5", "minutes_10", "minutes_15"),
         payload_values=(
             "Постоянная работа",
             "выбег 5 мин",
@@ -158,13 +158,13 @@ class StoutPlusSelectDescription(SelectEntityDescription):
 SELECTS: tuple[StoutPlusSelectDescription, ...] = (
     StoutPlusSelectDescription(
         key="power_day",
-        name="Day power limit",
+        translation_key="power_day",
         source_key="amountActiveLevelsPerDay",
         icon="mdi:flash",
     ),
     StoutPlusSelectDescription(
         key="power_night",
-        name="Night power limit",
+        translation_key="power_night",
         source_key="amountActiveLevelsAtNight",
         icon="mdi:weather-night",
     ),
@@ -286,7 +286,7 @@ class StoutPlusIndexSelect(StoutPlusEntity, SelectEntity):
 class StoutPlusDhwPowerSelect(StoutPlusEntity, SelectEntity):
     """Select the domestic hot water heating power."""
 
-    _attr_name = "Domestic hot water power"
+    _attr_translation_key = "dhw_power"
     _attr_icon = "mdi:water-boiler"
     _endpoint = "main"
 

@@ -32,7 +32,7 @@ class StoutPlusBinarySensorDescription(BinarySensorEntityDescription):
 BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     StoutPlusBinarySensorDescription(
         key="outdoor_sensor_connected",
-        name="Outdoor sensor",
+        translation_key="outdoor_sensor_connected",
         endpoint="other",
         source_key="OutAirSensor",
         value_kind="connected",
@@ -41,7 +41,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     ),
     StoutPlusBinarySensorDescription(
         key="room_sensor_connected",
-        name="Room sensor",
+        translation_key="room_sensor_connected",
         endpoint="other",
         source_key="InAirSensor",
         value_kind="connected",
@@ -50,7 +50,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     ),
     StoutPlusBinarySensorDescription(
         key="dhw_sensor_connected",
-        name="Domestic hot water sensor",
+        translation_key="dhw_sensor_connected",
         endpoint="other",
         source_key="DomHotWatSensor",
         value_kind="connected",
@@ -59,7 +59,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     ),
     StoutPlusBinarySensorDescription(
         key="pressure_sensor_connected",
-        name="Pressure sensor",
+        translation_key="pressure_sensor_connected",
         endpoint="additional",
         source_key="PressureSensor",
         value_kind="connected",
@@ -68,7 +68,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     ),
     StoutPlusBinarySensorDescription(
         key="boiler_temperature_sensor_connected",
-        name="Boiler temperature sensor",
+        translation_key="boiler_temperature_sensor_connected",
         endpoint="additional",
         source_key="OverHeatSensor",
         value_kind="connected",
@@ -77,7 +77,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     ),
     StoutPlusBinarySensorDescription(
         key="rtc",
-        name="Internal clock",
+        translation_key="rtc",
         endpoint="other",
         source_key="RTCStatus",
         value_kind="rtc",
@@ -86,7 +86,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     ),
     StoutPlusBinarySensorDescription(
         key="pump",
-        name="Pump",
+        translation_key="pump",
         endpoint="other",
         source_key="PmpStat",
         value_kind="pump",
@@ -95,7 +95,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
     ),
     StoutPlusBinarySensorDescription(
         key="problem",
-        name="Problem",
+        translation_key="problem",
         endpoint="main",
         source_key="Err_str",
         value_kind="problem",

@@ -2,6 +2,13 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), версии следуют [Semantic Versioning](https://semver.org/lang/ru/).
 
+## [1.3.1] — 2026-08-02
+
+### Исправлено
+
+- Добавлены русские переводы названий всех новых сущностей и вариантов выбора.
+- Внутренние значения режимов заменены стабильными ключами, а в интерфейсе Home Assistant отображаются локализованные подписи.
+
 ## [1.3.0] — 2026-08-02
 
 ### Добавлено
@@ -64,7 +71,8 @@
 
 - Первый публичный вариант интеграции.
 
-[1.2.0]: https://github.com/wad350/stout_plus/compare/v1.1.0...v1.2.0
+[1.3.1]: https://github.com/wad350/stout_plus/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/wad350/stout_plus/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/wad350/stout_plus/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/wad350/stout_plus/compare/8515c48...v1.1.0
 [1.0.0]: https://github.com/wad350/stout_plus/commit/8515c48

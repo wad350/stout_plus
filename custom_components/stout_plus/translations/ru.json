@@ -21,6 +21,232 @@
       }
     }
   },
+  "entity": {
+    "binary_sensor": {
+      "outdoor_sensor_connected": {
+        "name": "Уличный датчик"
+      },
+      "room_sensor_connected": {
+        "name": "Комнатный датчик"
+      },
+      "dhw_sensor_connected": {
+        "name": "Датчик ГВС"
+      },
+      "pressure_sensor_connected": {
+        "name": "Датчик давления"
+      },
+      "boiler_temperature_sensor_connected": {
+        "name": "Датчик температуры теплоносителя"
+      },
+      "rtc": {
+        "name": "Внутренние часы"
+      },
+      "pump": {
+        "name": "Насос"
+      },
+      "problem": {
+        "name": "Неисправность"
+      }
+    },
+    "climate": {
+      "boiler_temperature": {
+        "name": "Температура теплоносителя"
+      },
+      "room_temperature": {
+        "name": "Комнатная температура"
+      }
+    },
+    "number": {
+      "dhw_target_temperature": {
+        "name": "Целевая температура ГВС"
+      },
+      "temperature_hysteresis_setting": {
+        "name": "Гистерезис температуры"
+      }
+    },
+    "select": {
+      "operating_mode": {
+        "name": "Режим работы",
+        "state": {
+          "heating": "Отопление",
+          "weekly_schedule": "Недельный",
+          "room_temperature": "Комнатный",
+          "outdoor_curve": "Уличный",
+          "antifreeze": "Антизамерзание"
+        }
+      },
+      "outdoor_curve": {
+        "name": "Погодная кривая"
+      },
+      "external_management": {
+        "name": "Внешнее управление",
+        "state": {
+          "disabled": "Запрещено",
+          "opentherm": "OpenTherm",
+          "thermostat": "Термостат"
+        }
+      },
+      "remote_control_source": {
+        "name": "Источник удалённого управления",
+        "state": {
+          "application": "Приложение",
+          "telegram": "Telegram"
+        }
+      },
+      "warning_sound": {
+        "name": "Звуковой сигнал реле",
+        "state": {
+          "off": "Выключен",
+          "on": "Включён"
+        }
+      },
+      "anti_legionella_temperature": {
+        "name": "Температура антилегионеллы",
+        "state": {
+          "60_c": "60 °C",
+          "70_c": "70 °C"
+        }
+      },
+      "anti_legionella_weekday": {
+        "name": "День цикла антилегионеллы",
+        "state": {
+          "monday": "Понедельник",
+          "tuesday": "Вторник",
+          "wednesday": "Среда",
+          "thursday": "Четверг",
+          "friday": "Пятница",
+          "saturday": "Суббота",
+          "sunday": "Воскресенье"
+        }
+      },
+      "pump_overrun": {
+        "name": "Выбег насоса",
+        "state": {
+          "continuous": "Постоянная работа",
+          "minutes_5": "5 минут",
+          "minutes_10": "10 минут",
+          "minutes_15": "15 минут"
+        }
+      },
+      "power_day": {
+        "name": "Дневной лимит мощности"
+      },
+      "power_night": {
+        "name": "Ночной лимит мощности"
+      },
+      "dhw_power": {
+        "name": "Мощность ГВС"
+      }
+    },
+    "sensor": {
+      "power": {
+        "name": "Текущее потребление"
+      },
+      "pressure": {
+        "name": "Давление"
+      },
+      "room_temp": {
+        "name": "Температура комнатного датчика"
+      },
+      "boiler_water_temperature": {
+        "name": "Температура теплоносителя"
+      },
+      "outdoor_temperature": {
+        "name": "Уличная температура"
+      },
+      "dhw_temperature": {
+        "name": "Температура ГВС"
+      },
+      "maximum_power": {
+        "name": "Максимальная мощность"
+      },
+      "power_stages": {
+        "name": "Ступени мощности"
+      },
+      "maximum_boiler_water_temperature": {
+        "name": "Максимальная температура теплоносителя"
+      },
+      "temperature_hysteresis": {
+        "name": "Гистерезис температуры"
+      },
+      "boiler_status": {
+        "name": "Состояние котла"
+      },
+      "operating_mode_status": {
+        "name": "Состояние режима"
+      },
+      "anti_legionella_status": {
+        "name": "Состояние антилегионеллы"
+      },
+      "controller_firmware": {
+        "name": "Прошивка контроллера котла"
+      },
+      "remote_firmware": {
+        "name": "Прошивка пульта"
+      },
+      "minimum_dhw_temperature": {
+        "name": "Минимальная температура ГВС"
+      },
+      "maximum_dhw_temperature": {
+        "name": "Максимальная температура ГВС"
+      },
+      "minimum_pressure": {
+        "name": "Минимальное давление"
+      },
+      "maximum_pressure": {
+        "name": "Максимальное давление"
+      },
+      "minimum_boiler_water_temperature": {
+        "name": "Минимальная температура теплоносителя"
+      },
+      "maximum_room_temperature": {
+        "name": "Максимальная комнатная температура"
+      },
+      "minimum_room_temperature": {
+        "name": "Минимальная комнатная температура"
+      },
+      "sensor_1_temperature": {
+        "name": "Температура датчика 1"
+      },
+      "sensor_2_temperature": {
+        "name": "Температура датчика 2"
+      },
+      "sensor_3_temperature": {
+        "name": "Температура датчика 3"
+      },
+      "sensor_0_mode": {
+        "name": "Режим датчика 0"
+      },
+      "sensor_1_mode": {
+        "name": "Режим датчика 1"
+      },
+      "sensor_2_mode": {
+        "name": "Режим датчика 2"
+      },
+      "sensor_3_mode": {
+        "name": "Режим датчика 3"
+      }
+    },
+    "switch": {
+      "domestic_hot_water": {
+        "name": "Горячее водоснабжение"
+      },
+      "anti_legionella": {
+        "name": "Антилегионелла"
+      }
+    },
+    "time": {
+      "night_time": {
+        "name": "Начало ночного периода"
+      },
+      "day_time": {
+        "name": "Начало дневного периода"
+      },
+      "anti_legionella_time": {
+        "name": "Начало цикла антилегионеллы"
+      }
+    }
+  },
   "options": {
     "error": {
       "cannot_connect": "Не удалось подключиться к котлу"

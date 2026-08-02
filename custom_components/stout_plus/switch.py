@@ -53,7 +53,7 @@ class StoutPlusSwitch(StoutPlusEntity, SwitchEntity):
 class StoutPlusDhwSwitch(StoutPlusSwitch):
     """Enable domestic hot water heating."""
 
-    _attr_name = "Domestic hot water"
+    _attr_translation_key = "domestic_hot_water"
     _attr_icon = "mdi:water-boiler"
     _endpoint = "main"
 
@@ -75,7 +75,7 @@ class StoutPlusDhwSwitch(StoutPlusSwitch):
 class StoutPlusAntiLegionellaSwitch(StoutPlusSwitch):
     """Enable the anti-legionella cycle."""
 
-    _attr_name = "Anti-legionella"
+    _attr_translation_key = "anti_legionella"
     _attr_icon = "mdi:bacteria-outline"
     _endpoint = "other"
 

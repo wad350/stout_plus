@@ -21,6 +21,232 @@
       }
     }
   },
+  "entity": {
+    "binary_sensor": {
+      "outdoor_sensor_connected": {
+        "name": "Outdoor sensor"
+      },
+      "room_sensor_connected": {
+        "name": "Room sensor"
+      },
+      "dhw_sensor_connected": {
+        "name": "Domestic hot water sensor"
+      },
+      "pressure_sensor_connected": {
+        "name": "Pressure sensor"
+      },
+      "boiler_temperature_sensor_connected": {
+        "name": "Boiler temperature sensor"
+      },
+      "rtc": {
+        "name": "Internal clock"
+      },
+      "pump": {
+        "name": "Pump"
+      },
+      "problem": {
+        "name": "Problem"
+      }
+    },
+    "climate": {
+      "boiler_temperature": {
+        "name": "Boiler temperature"
+      },
+      "room_temperature": {
+        "name": "Room temperature"
+      }
+    },
+    "number": {
+      "dhw_target_temperature": {
+        "name": "Domestic hot water target temperature"
+      },
+      "temperature_hysteresis_setting": {
+        "name": "Temperature hysteresis setting"
+      }
+    },
+    "select": {
+      "operating_mode": {
+        "name": "Operating mode",
+        "state": {
+          "heating": "Heating",
+          "weekly_schedule": "Weekly schedule",
+          "room_temperature": "Room temperature",
+          "outdoor_curve": "Outdoor curve",
+          "antifreeze": "Antifreeze"
+        }
+      },
+      "outdoor_curve": {
+        "name": "Outdoor curve"
+      },
+      "external_management": {
+        "name": "External management",
+        "state": {
+          "disabled": "Disabled",
+          "opentherm": "OpenTherm",
+          "thermostat": "Thermostat"
+        }
+      },
+      "remote_control_source": {
+        "name": "Remote control source",
+        "state": {
+          "application": "Application",
+          "telegram": "Telegram"
+        }
+      },
+      "warning_sound": {
+        "name": "Relay warning sound",
+        "state": {
+          "off": "Off",
+          "on": "On"
+        }
+      },
+      "anti_legionella_temperature": {
+        "name": "Anti-legionella temperature",
+        "state": {
+          "60_c": "60 °C",
+          "70_c": "70 °C"
+        }
+      },
+      "anti_legionella_weekday": {
+        "name": "Anti-legionella weekday",
+        "state": {
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday",
+          "sunday": "Sunday"
+        }
+      },
+      "pump_overrun": {
+        "name": "Pump overrun",
+        "state": {
+          "continuous": "Continuous",
+          "minutes_5": "5 minutes",
+          "minutes_10": "10 minutes",
+          "minutes_15": "15 minutes"
+        }
+      },
+      "power_day": {
+        "name": "Day power limit"
+      },
+      "power_night": {
+        "name": "Night power limit"
+      },
+      "dhw_power": {
+        "name": "Domestic hot water power"
+      }
+    },
+    "sensor": {
+      "power": {
+        "name": "Power consumption"
+      },
+      "pressure": {
+        "name": "Pressure"
+      },
+      "room_temp": {
+        "name": "Room temperature sensor"
+      },
+      "boiler_water_temperature": {
+        "name": "Boiler water temperature sensor"
+      },
+      "outdoor_temperature": {
+        "name": "Outdoor temperature"
+      },
+      "dhw_temperature": {
+        "name": "Domestic hot water temperature"
+      },
+      "maximum_power": {
+        "name": "Maximum power"
+      },
+      "power_stages": {
+        "name": "Power stages"
+      },
+      "maximum_boiler_water_temperature": {
+        "name": "Maximum boiler water temperature"
+      },
+      "temperature_hysteresis": {
+        "name": "Temperature hysteresis"
+      },
+      "boiler_status": {
+        "name": "Boiler status"
+      },
+      "operating_mode_status": {
+        "name": "Operating mode status"
+      },
+      "anti_legionella_status": {
+        "name": "Anti-legionella status"
+      },
+      "controller_firmware": {
+        "name": "Boiler controller firmware"
+      },
+      "remote_firmware": {
+        "name": "Control panel firmware"
+      },
+      "minimum_dhw_temperature": {
+        "name": "Minimum domestic hot water temperature"
+      },
+      "maximum_dhw_temperature": {
+        "name": "Maximum domestic hot water temperature"
+      },
+      "minimum_pressure": {
+        "name": "Minimum pressure"
+      },
+      "maximum_pressure": {
+        "name": "Maximum pressure"
+      },
+      "minimum_boiler_water_temperature": {
+        "name": "Minimum boiler water temperature"
+      },
+      "maximum_room_temperature": {
+        "name": "Maximum room temperature"
+      },
+      "minimum_room_temperature": {
+        "name": "Minimum room temperature"
+      },
+      "sensor_1_temperature": {
+        "name": "Sensor 1 temperature"
+      },
+      "sensor_2_temperature": {
+        "name": "Sensor 2 temperature"
+      },
+      "sensor_3_temperature": {
+        "name": "Sensor 3 temperature"
+      },
+      "sensor_0_mode": {
+        "name": "Sensor 0 mode"
+      },
+      "sensor_1_mode": {
+        "name": "Sensor 1 mode"
+      },
+      "sensor_2_mode": {
+        "name": "Sensor 2 mode"
+      },
+      "sensor_3_mode": {
+        "name": "Sensor 3 mode"
+      }
+    },
+    "switch": {
+      "domestic_hot_water": {
+        "name": "Domestic hot water"
+      },
+      "anti_legionella": {
+        "name": "Anti-legionella"
+      }
+    },
+    "time": {
+      "night_time": {
+        "name": "Night period starts"
+      },
+      "day_time": {
+        "name": "Day period starts"
+      },
+      "anti_legionella_time": {
+        "name": "Anti-legionella cycle starts"
+      }
+    }
+  },
   "options": {
     "error": {
       "cannot_connect": "Failed to connect to the boiler"

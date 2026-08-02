@@ -59,7 +59,7 @@ class StoutPlusClimateEntity(StoutPlusEntity, ClimateEntity):
 class BoilerClimateEntity(StoutPlusClimateEntity):
     """Control heating by the boiler water temperature."""
 
-    _attr_name = "Boiler temperature"
+    _attr_translation_key = "boiler_temperature"
     _attr_min_temp = 15.0
     _attr_max_temp = 40.0
 
@@ -95,7 +95,7 @@ class BoilerClimateEntity(StoutPlusClimateEntity):
 class RoomClimateEntity(StoutPlusClimateEntity):
     """Control heating by the room temperature."""
 
-    _attr_name = "Room temperature"
+    _attr_translation_key = "room_temperature"
     _attr_min_temp = 18.0
     _attr_max_temp = 28.0
 

@@ -37,7 +37,7 @@ class StoutPlusSensorDescription(SensorEntityDescription):
 SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     StoutPlusSensorDescription(
         key="power",
-        name="Power consumption",
+        translation_key="power",
         endpoint="other",
         source_key="CurrPwr_str",
         native_unit_of_measurement=UnitOfPower.KILO_WATT,
@@ -46,7 +46,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="pressure",
-        name="Pressure",
+        translation_key="pressure",
         endpoint="other",
         source_key="ActPress",
         native_unit_of_measurement=UnitOfPressure.BAR,
@@ -55,7 +55,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="room_temp",
-        name="Room temperature sensor",
+        translation_key="room_temp",
         endpoint="additional",
         source_key="SensTemp0",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -65,7 +65,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="boiler_water_temperature",
-        name="Boiler water temperature sensor",
+        translation_key="boiler_water_temperature",
         endpoint="main",
         source_key="ActValTempCarrier",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -75,7 +75,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="outdoor_temperature",
-        name="Outdoor temperature",
+        translation_key="outdoor_temperature",
         endpoint="main",
         source_key="TempOutAir",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -85,7 +85,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="dhw_temperature",
-        name="Domestic hot water temperature",
+        translation_key="dhw_temperature",
         endpoint="main",
         source_key="temperatureOfDHW",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -95,7 +95,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="maximum_power",
-        name="Maximum power",
+        translation_key="maximum_power",
         endpoint="other",
         source_key="FullPwr_str",
         native_unit_of_measurement=UnitOfPower.KILO_WATT,
@@ -104,14 +104,14 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="power_stages",
-        name="Power stages",
+        translation_key="power_stages",
         endpoint="other",
         source_key="PowerLevels_str",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     StoutPlusSensorDescription(
         key="maximum_boiler_water_temperature",
-        name="Maximum boiler water temperature",
+        translation_key="maximum_boiler_water_temperature",
         endpoint="other",
         source_key="SetMaxTempCarrier",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -121,7 +121,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="temperature_hysteresis",
-        name="Temperature hysteresis",
+        translation_key="temperature_hysteresis",
         endpoint="other",
         source_key="gist",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -131,7 +131,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="boiler_status",
-        name="Boiler status",
+        translation_key="boiler_status",
         endpoint="main",
         source_key="Err_str",
         value_kind="text",
@@ -139,7 +139,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="operating_mode_status",
-        name="Operating mode status",
+        translation_key="operating_mode_status",
         endpoint="main",
         source_key="ModeStat",
         value_kind="text",
@@ -147,7 +147,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="anti_legionella_status",
-        name="Anti-legionella status",
+        translation_key="anti_legionella_status",
         endpoint="other",
         source_key="Antil_stat_str",
         value_kind="text",
@@ -155,7 +155,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="controller_firmware",
-        name="Boiler controller firmware",
+        translation_key="controller_firmware",
         endpoint="additional",
         source_key="boilerControllerSoft",
         value_kind="text",
@@ -163,7 +163,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="remote_firmware",
-        name="Control panel firmware",
+        translation_key="remote_firmware",
         endpoint="additional",
         source_key="boilerRemoteSoft",
         value_kind="text",
@@ -171,7 +171,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="minimum_dhw_temperature",
-        name="Minimum domestic hot water temperature",
+        translation_key="minimum_dhw_temperature",
         endpoint="additional",
         source_key="minDHWTemp",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -182,7 +182,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="maximum_dhw_temperature",
-        name="Maximum domestic hot water temperature",
+        translation_key="maximum_dhw_temperature",
         endpoint="additional",
         source_key="maxDHWTemp",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -193,7 +193,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="minimum_pressure",
-        name="Minimum pressure",
+        translation_key="minimum_pressure",
         endpoint="additional",
         source_key="MinPress",
         native_unit_of_measurement=UnitOfPressure.BAR,
@@ -203,7 +203,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="maximum_pressure",
-        name="Maximum pressure",
+        translation_key="maximum_pressure",
         endpoint="additional",
         source_key="MaxPress",
         native_unit_of_measurement=UnitOfPressure.BAR,
@@ -213,7 +213,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="minimum_boiler_water_temperature",
-        name="Minimum boiler water temperature",
+        translation_key="minimum_boiler_water_temperature",
         endpoint="additional",
         source_key="MinWarmCarrier",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -224,7 +224,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="maximum_room_temperature",
-        name="Maximum room temperature",
+        translation_key="maximum_room_temperature",
         endpoint="additional",
         source_key="MaxTempInRoom",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -235,7 +235,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="minimum_room_temperature",
-        name="Minimum room temperature",
+        translation_key="minimum_room_temperature",
         endpoint="additional",
         source_key="MinTempInRoom",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -246,7 +246,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="sensor_1_temperature",
-        name="Sensor 1 temperature",
+        translation_key="sensor_1_temperature",
         endpoint="additional",
         source_key="SensTemp1",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -258,7 +258,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="sensor_2_temperature",
-        name="Sensor 2 temperature",
+        translation_key="sensor_2_temperature",
         endpoint="additional",
         source_key="SensTemp2",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -270,7 +270,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     ),
     StoutPlusSensorDescription(
         key="sensor_3_temperature",
-        name="Sensor 3 temperature",
+        translation_key="sensor_3_temperature",
         endpoint="additional",
         source_key="SensTemp3",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -283,7 +283,7 @@ SENSORS: tuple[StoutPlusSensorDescription, ...] = (
     *(
         StoutPlusSensorDescription(
             key=f"sensor_{index}_mode",
-            name=f"Sensor {index} mode",
+            translation_key=f"sensor_{index}_mode",
             endpoint="additional",
             source_key=f"SensMode{index}",
             value_kind="text",

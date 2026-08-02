@@ -30,19 +30,19 @@ class StoutPlusTimeDescription(TimeEntityDescription):
 TIME_ENTITIES: tuple[StoutPlusTimeDescription, ...] = (
     StoutPlusTimeDescription(
         key="night_time",
-        name="Night period starts",
+        translation_key="night_time",
         source_key="nightTime",
         icon="mdi:timer-settings-outline",
     ),
     StoutPlusTimeDescription(
         key="day_time",
-        name="Day period starts",
+        translation_key="day_time",
         source_key="dayTime",
         icon="mdi:timer-settings",
     ),
     StoutPlusTimeDescription(
         key="anti_legionella_time",
-        name="Anti-legionella cycle starts",
+        translation_key="anti_legionella_time",
         source_key="set_time_legionella",
         icon="mdi:bacteria-outline",
         command="apply_alig_page",

@@ -7,6 +7,7 @@ from __future__ import annotations
 from unittest.mock import AsyncMock, patch
 
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.translation import async_get_translations
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.stout_plus.api import StoutPlusApi
@@ -146,7 +147,7 @@ async def test_setup_all_platforms(hass, enable_custom_integrations) -> None:
             "select_option",
             {
                 "entity_id": by_unique_id[f"{DOMAIN}_{entry.entry_id}_operating_mode"],
-                "option": "Heating",
+                "option": "heating",
             },
             blocking=True,
         )
@@ -196,3 +197,17 @@ async def test_setup_all_platforms(hass, enable_custom_integrations) -> None:
             "apply_power_day", {"amountActiveLevelsPerDay": "6.0"}
         )
         post_form.assert_any_await("apply_power_day", {"nightTime": "23:00"})
+
+        translations = await async_get_translations(
+            hass, "ru", "entity", integrations={DOMAIN}
+        )
+        assert (
+            translations[f"component.{DOMAIN}.entity.sensor.pressure.name"]
+            == "Давление"
+        )
+        assert (
+            translations[
+                f"component.{DOMAIN}.entity.select.operating_mode.state.antifreeze"
+            ]
+            == "Антизамерзание"
+        )
