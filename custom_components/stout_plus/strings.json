@@ -1,7 +1,8 @@
 {
   "config": {
     "abort": {
-      "already_configured": "This boiler is already configured"
+      "already_configured": "This boiler is already configured",
+      "cannot_connect": "Failed to connect to the discovered boiler"
     },
     "error": {
       "cannot_connect": "Failed to connect to the boiler"
@@ -13,6 +14,10 @@
         },
         "description": "Enter the local network address of the boiler.",
         "title": "Connect Stout Plus"
+      },
+      "zeroconf_confirm": {
+        "description": "Stout Plus {name} was found at {host}. Add this boiler to Home Assistant?",
+        "title": "Stout Plus discovered"
       }
     }
   },

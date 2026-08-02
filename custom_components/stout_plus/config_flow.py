@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
 from homeassistant import config_entries
@@ -13,11 +13,19 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .api import StoutPlusApi, StoutPlusApiError
 from .const import DOMAIN, REQUEST_TIMEOUT
 
+if TYPE_CHECKING:
+    from homeassistant.helpers.service_info.zeroconf import ZeroconfServiceInfo
+
 
 class StoutPlusConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Stout Plus."""
 
     VERSION = 1
+
+    def __init__(self) -> None:
+        """Initialize the config flow."""
+        self._discovered_host: str | None = None
+        self._discovered_name: str | None = None
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -38,6 +46,44 @@ class StoutPlusConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         schema = vol.Schema({vol.Required(CONF_HOST): vol.All(str, _normalize_host)})
         return self.async_show_form(step_id="user", data_schema=schema, errors=errors)
+
+    async def async_step_zeroconf(
+        self, discovery_info: ZeroconfServiceInfo
+    ) -> FlowResult:
+        """Handle a boiler discovered through mDNS."""
+        host = discovery_info.host
+        name = discovery_info.name.partition("._http._tcp.local.")[0]
+
+        self._async_abort_entries_match({CONF_HOST: host})
+        if not await self._async_test_connection(host):
+            return self.async_abort(reason="cannot_connect")
+
+        await self.async_set_unique_id(name.lower())
+        self._abort_if_unique_id_configured(updates={CONF_HOST: host})
+
+        self._discovered_host = host
+        self._discovered_name = name
+        self.context["title_placeholders"] = {"name": name}
+        return await self.async_step_zeroconf_confirm()
+
+    async def async_step_zeroconf_confirm(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Ask the user to confirm a discovered boiler."""
+        if user_input is not None:
+            return self.async_create_entry(
+                title=f"Stout Plus ({self._discovered_name})",
+                data={CONF_HOST: self._discovered_host},
+            )
+
+        self._set_confirm_only()
+        return self.async_show_form(
+            step_id="zeroconf_confirm",
+            description_placeholders={
+                "name": self._discovered_name or "Stout Plus",
+                "host": self._discovered_host or "",
+            },
+        )
 
     async def _async_test_connection(self, host: str) -> bool:
         api = StoutPlusApi(async_get_clientsession(self.hass), host, REQUEST_TIMEOUT)
@@ -80,7 +126,6 @@ class StoutPlusOptionsFlowHandler(config_entries.OptionsFlow):
                 self.hass.config_entries.async_update_entry(
                     self._config_entry,
                     data={**self._config_entry.data, CONF_HOST: host},
-                    unique_id=host.lower(),
                 )
                 return self.async_create_entry(title="", data={})
 
