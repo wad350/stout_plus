@@ -1,34 +1,37 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-DOMAIN = "stout_plus"
+from .api import StoutPlusApi
+from .const import DOMAIN, PLATFORMS, REQUEST_TIMEOUT
+from .coordinator import StoutPlusCoordinator
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Stout Plus integration from a config entry."""
-    hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN][entry.entry_id] = entry.data
+    api = StoutPlusApi(
+        async_get_clientsession(hass), entry.data["host"], REQUEST_TIMEOUT
+    )
+    coordinator = StoutPlusCoordinator(hass, entry, api)
+    await coordinator.async_config_entry_first_refresh()
 
-    try:
-        # Forward the entry to the supported platforms
-        await hass.config_entries.async_forward_entry_setups(
-            entry, ["climate", "sensor", "select", "time"]
-        )
-    except Exception as ex:
-        raise ConfigEntryNotReady from ex
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+    entry.async_on_unload(entry.add_update_listener(_async_reload_entry))
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = await hass.config_entries.async_unload_platforms(
-        entry, ["climate", "sensor", "select", "time"]
-    )
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if unload_ok:
-        hass.data[DOMAIN].pop(entry.entry_id)
+        hass.data[DOMAIN].pop(entry.entry_id, None)
 
     return unload_ok
 
+
+async def _async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Reload the integration after its configuration changes."""
+    await hass.config_entries.async_reload(entry.entry_id)

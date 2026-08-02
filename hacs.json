@@ -1,3 +1,7 @@
 {
-  "name": "Stout Plus"
+  "filename": "stout_plus.zip",
+  "homeassistant": "2024.8.0",
+  "name": "Stout Plus",
+  "render_readme": true,
+  "zip_release": true
 }

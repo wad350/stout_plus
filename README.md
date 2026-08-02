@@ -1,32 +1,88 @@
-# Stout Plus Home Assistant Integration
+# Stout Plus для Home Assistant
 
-This repository contains the **Stout Plus** custom integration for Home Assistant.  It exposes a number of entities for controlling and monitoring your Stout Plus boiler and room climate controller.
+<p align="center">
+  <img src="custom_components/stout_plus/brand/logo.png" alt="STOUT" width="420">
+</p>
 
-## Features
+[![Validate](https://github.com/wad350/stout_plus/actions/workflows/validate.yml/badge.svg)](https://github.com/wad350/stout_plus/actions/workflows/validate.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/wad350/stout_plus)](https://github.com/wad350/stout_plus/releases)
 
-Once configured, the integration provides the following entities:
+Пользовательская интеграция Home Assistant для локального управления электрическим котлом **Stout Plus** через его встроенный HTTP-интерфейс. Облачный сервис не используется.
 
-- **Climate** – Control the boiler and room heating targets and modes.
-- **Sensors** – Monitor power consumption, water pressure and current room temperature.
-- **Select** – Change boiler operating modes.
-- **Time entities** – Set night and day periods for the boiler.
+Требуется Home Assistant 2024.8 или новее.
 
-The integration polls your boiler every few seconds (defaults are defined in the source code) to keep Home Assistant updated with the latest values.
+Фирменный значок отображается непосредственно из интеграции в Home Assistant 2026.3 и новее; в более ранних версиях это не влияет на работу управления котлом.
 
-## Installation
+> Интеграция разрабатывалась для **Stout Plus 9 кВт**. Совместимость с другими мощностями и версиями прошивки пока не подтверждена. Проект не связан с производителем Stout.
 
-1. Copy or clone this repository to your Home Assistant `custom_components` directory, preserving the folder structure (`custom_components/stout_plus`).  With HACS installed, you can alternatively add this GitHub repository as a **custom repository** of type **Integration**.
-2. Restart Home Assistant to pick up the new component.
-3. From the *Settings → Devices & Services* page, click **Add Integration**, search for **Stout Plus**, and follow the prompts.  You will need to supply the host name or IP address of your boiler's web interface.
+Полный цикл чтения и управления проверен на котле 9 кВт с прошивкой контроллера `00.01.006` и пульта `02.04.001`: изменение обеих целевых температур, переключение режимов, дневной/ночной лимит мощности и расписание.
 
-## Configuration
+## Возможности
 
-The integration uses a config flow, so all configuration is performed through the Home Assistant UI.  After initial setup you can adjust the host address via the integration options.
+После настройки создаётся одно устройство со следующими сущностями:
 
-## Requirements
+| Тип | Сущности | Возможности |
+| --- | --- | --- |
+| Climate | Температура теплоносителя, комнатная температура | целевая температура, включение и выключение режима |
+| Sensor | Мощность, давление, комнатный датчик | текущее состояние котла |
+| Select | Дневной и ночной лимит мощности | от 1,5 до 9,0 кВт с шагом 1,5 кВт |
+| Time | Начало дневного и ночного периода | настройка расписания мощности |
 
-The integration relies on the [httpx](https://www.python-httpx.org/) library, which is declared in the manifest.  Home Assistant will install this dependency automatically during setup.
+Данные считываются раз в 10 секунд. За один цикл интеграция делает по одному запросу к каждому из трёх разделов API, а не отдельный запрос для каждой сущности. Если котёл временно недоступен, Home Assistant помечает все его сущности как недоступные и автоматически продолжает попытки подключения.
 
-## Support
+## Установка
 
-This project is not affiliated with Stout.  Please open an issue in this repository if you encounter problems or wish to suggest improvements.
+### Через HACS
+
+1. Откройте HACS → **Integrations**.
+2. В меню выберите **Custom repositories**.
+3. Добавьте `https://github.com/wad350/stout_plus` с типом **Integration**.
+4. Найдите **Stout Plus**, установите последнюю версию и перезапустите Home Assistant.
+
+### Вручную
+
+Скопируйте каталог `custom_components/stout_plus` в одноимённый каталог внутри конфигурации Home Assistant:
+
+```text
+<config>/custom_components/stout_plus/
+```
+
+После копирования перезапустите Home Assistant.
+
+## Настройка
+
+1. Откройте **Настройки → Устройства и службы → Добавить интеграцию**.
+2. Найдите **Stout Plus**.
+3. Укажите IP-адрес или имя котла, например `192.168.1.50` — без пути и порта.
+
+Адрес можно изменить позднее через кнопку **Настроить** у интеграции. Перед сохранением новый адрес проверяется, затем интеграция автоматически перезагружается.
+
+Рекомендуется закрепить постоянный IP-адрес котла в настройках DHCP вашего роутера.
+
+## Ограничения и безопасность
+
+- Котёл предоставляет незашифрованный HTTP-интерфейс без аутентификации. Не публикуйте его порт в интернет и держите устройство в доверенной локальной сети или отдельном IoT-сегменте.
+- Автоматическое обнаружение котла в сети не реализовано.
+- Набор полей HTTP API может отличаться между версиями прошивки.
+- Лимиты мощности сейчас рассчитаны на модель 9 кВт.
+
+## Решение проблем
+
+- Убедитесь, что адрес котла открывается из той же сети, где работает Home Assistant.
+- В поле адреса вводите только IP или имя. Префикс `http://` допускается и будет удалён автоматически; `https://` не поддерживается котлом.
+- Если сущности недоступны, проверьте журналы Home Assistant по фильтру `custom_components.stout_plus`.
+- При смене адреса используйте **Настроить** у уже добавленной интеграции, а не создавайте вторую запись.
+
+Сообщения об ошибках и сведения о проверенных моделях/прошивках можно оставить в [GitHub Issues](https://github.com/wad350/stout_plus/issues).
+
+## Версии и обновление
+
+История изменений находится в [CHANGELOG.md](CHANGELOG.md). Релизы используют семантические версии и публикуются на странице [GitHub Releases](https://github.com/wad350/stout_plus/releases). HACS устанавливает подготовленный архив `stout_plus.zip` из релиза.
+
+Обновление с версии 1.0.0 сохраняет идентификаторы существующих сущностей. После установки достаточно перезапустить Home Assistant.
+
+## Лицензия
+
+[MIT](LICENSE)
+
+Название и логотип STOUT принадлежат их правообладателю и используются только для идентификации совместимого оборудования.

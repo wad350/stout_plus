@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build release archive
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify tag matches manifest version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          manifest_version="$(jq -r .version custom_components/stout_plus/manifest.json)"
+          test "${RELEASE_TAG}" = "v${manifest_version}"
+
+      - name: Build HACS archive
+        working-directory: custom_components/stout_plus
+        run: zip -r ../../stout_plus.zip . -x "*__pycache__*" "*.pyc"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "${{ github.ref_name }}"
+          stout_plus.zip
+          --generate-notes
+          --title "Stout Plus ${{ github.ref_name }}"
+          --verify-tag

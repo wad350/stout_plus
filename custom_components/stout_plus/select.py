@@ -1,137 +1,101 @@
-from homeassistant.components.select import SelectEntity
-from homeassistant.helpers.event import async_track_time_interval
-from datetime import timedelta
-import httpx
+"""Power limit selects for Stout Plus."""
 
-from . import DOMAIN
+from __future__ import annotations
 
-POLLING_INTERVAL = timedelta(seconds=5)
+from dataclasses import dataclass
 
+from homeassistant.components.select import SelectEntity, SelectEntityDescription
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-async def async_setup_entry(hass, entry, async_add_entities):
-    """Set up the select entities."""
-    host = entry.data["host"]
-    entry_id = entry.entry_id
-    selects = [
-        BoilerPowerDaySelect(host, entry_id),
-        BoilerPowerNightSelect(host, entry_id),
-    ]
-    async_add_entities(selects)
+from .api import StoutPlusApiError
+from .const import DOMAIN
+from .coordinator import StoutPlusCoordinator
+from .entity import StoutPlusEntity
 
-    async def update_selects(*_):
-        for select in selects:
-            await select.async_update()
-
-    async_track_time_interval(hass, update_selects, POLLING_INTERVAL)
+POWER_OPTIONS = ["1.5", "3.0", "4.5", "6.0", "7.5", "9.0"]
 
 
-class BoilerPowerDaySelect(SelectEntity):
-    """Representation of the day power level select entity."""
+@dataclass(frozen=True, kw_only=True)
+class StoutPlusSelectDescription(SelectEntityDescription):
+    """Describe a Stout Plus select."""
 
-    _attr_options = ["1.5", "3.0", "4.5", "6.0", "7.5", "9.0"]
-    _attr_name = "Boiler Day Power Limit"
-    _attr_icon = "mdi:flash"
-
-    def __init__(self, host: str, entry_id: str):
-        """Initialize the select entity."""
-        self._host = host
-        self._entry_id = entry_id
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_power_day"
-        self._attr_current_option = None
-
-    @property
-    def device_info(self):
-        """Return device information for linking the select entity to the boiler device."""
-        return {
-            "identifiers": {(DOMAIN, self._entry_id)},
-            "name": "Boiler Controller",
-            "manufacturer": "Stout",
-            "model": "Stout Plus 9kvt",
-        }
-
-    async def async_select_option(self, option: str):
-        """Handle the selection of an option."""
-        try:
-            async with httpx.AsyncClient(verify=False, trust_env=False) as client:
-                await client.post(
-                    f"http://{self._host}/apply_power_day",
-                    headers={"Content-Type": "application/x-www-form-urlencoded"},
-                    data={"amountActiveLevelsPerDay": option},
-                )
-                self._attr_current_option = option
-                self.async_write_ha_state()
-        except (httpx.RequestError, ValueError):
-            pass  # Keep the previous state on error
-
-    async def async_update(self):
-        """Fetch the current power limit."""
-        try:
-            async with httpx.AsyncClient(verify=False, trust_env=False) as client:
-                response = await client.get(f"http://{self._host}/other_params")
-                response.raise_for_status()
-                data = response.json()
-
-                # Convert step value to power level
-                step = int(data.get("amountActiveLevelsPerDay", 1))
-                power_level = step * 1.5
-                self._attr_current_option = f"{power_level:.1f}" if power_level in [float(opt) for opt in self._attr_options] else None
-        except (httpx.RequestError, ValueError, KeyError):
-            self._attr_current_option = None
-
-        self.async_write_ha_state()
+    source_key: str
+    icon: str
 
 
-class BoilerPowerNightSelect(SelectEntity):
-    """Representation of the night power level select entity."""
+SELECTS: tuple[StoutPlusSelectDescription, ...] = (
+    StoutPlusSelectDescription(
+        key="power_day",
+        name="Day power limit",
+        source_key="amountActiveLevelsPerDay",
+        icon="mdi:flash",
+    ),
+    StoutPlusSelectDescription(
+        key="power_night",
+        name="Night power limit",
+        source_key="amountActiveLevelsAtNight",
+        icon="mdi:weather-night",
+    ),
+)
 
-    _attr_options = ["1.5", "3.0", "4.5", "6.0", "7.5", "9.0"]
-    _attr_name = "Boiler Night Power Limit"
-    _attr_icon = "mdi:weather-night"
 
-    def __init__(self, host: str, entry_id: str):
-        """Initialize the select entity."""
-        self._host = host
-        self._entry_id = entry_id
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_power_night"
-        self._attr_current_option = None
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
+    """Set up select entities."""
+    coordinator: StoutPlusCoordinator = hass.data[DOMAIN][entry.entry_id]
+    async_add_entities(
+        StoutPlusPowerSelect(coordinator, entry.entry_id, description)
+        for description in SELECTS
+    )
+
+
+class StoutPlusPowerSelect(StoutPlusEntity, SelectEntity):
+    """Select the maximum boiler power in kW."""
+
+    _attr_options = POWER_OPTIONS
+    _endpoint = "other"
+    entity_description: StoutPlusSelectDescription
+
+    def __init__(
+        self,
+        coordinator: StoutPlusCoordinator,
+        entry_id: str,
+        description: StoutPlusSelectDescription,
+    ) -> None:
+        super().__init__(coordinator, entry_id)
+        self.entity_description = description
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{description.key}"
 
     @property
-    def device_info(self):
-        """Return device information for linking the select entity to the boiler device."""
-        return {
-            "identifiers": {(DOMAIN, self._entry_id)},
-            "name": "Boiler Controller",
-            "manufacturer": "Stout",
-            "model": "Stout Plus 9kvt",
-        }
-
-    async def async_select_option(self, option: str):
-        """Handle the selection of an option."""
+    def current_option(self) -> str | None:
         try:
-            async with httpx.AsyncClient(verify=False, trust_env=False) as client:
-                await client.post(
-                    f"http://{self._host}/apply_power_day",
-                    headers={"Content-Type": "application/x-www-form-urlencoded"},
-                    data={"amountActiveLevelsAtNight": option},
-                )
-                self._attr_current_option = option
-                self.async_write_ha_state()
-        except (httpx.RequestError, ValueError):
-            pass  # Keep the previous state on error
+            stages = int(
+                self.coordinator.data["other"][self.entity_description.source_key]
+            )
+        except (KeyError, TypeError, ValueError):
+            return None
+        option = f"{stages * 1.5:.1f}"
+        return option if option in self.options else None
 
-    async def async_update(self):
-        """Fetch the current power limit."""
+    async def async_select_option(self, option: str) -> None:
+        """Set a power limit in kW.
+
+        The boiler accepts kW in the form but reports the resulting number of
+        active 1.5 kW stages from ``other_params``.
+        """
         try:
-            async with httpx.AsyncClient(verify=False, trust_env=False) as client:
-                response = await client.get(f"http://{self._host}/other_params")
-                response.raise_for_status()
-                data = response.json()
-
-                # Convert step value to power level
-                step = int(data.get("amountActiveLevelsAtNight", 1))
-                power_level = step * 1.5
-                self._attr_current_option = f"{power_level:.1f}" if power_level in [float(opt) for opt in self._attr_options] else None
-        except (httpx.RequestError, ValueError, KeyError):
-            self._attr_current_option = None
-
-        self.async_write_ha_state()
+            await self.coordinator.api.async_post_form(
+                "apply_power_day",
+                {self.entity_description.source_key: option},
+            )
+        except StoutPlusApiError as err:
+            raise HomeAssistantError(
+                "Could not set the Stout Plus power limit"
+            ) from err
+        await self.coordinator.async_request_refresh()

@@ -1,17 +1,33 @@
 {
-    "config": {
-        "title": "Котёл Stout Plus",
-        "step": {
-            "user": {
-                "title": "Настройка котла Stout Plus",
-                "description": "Введите IP-адрес вашего котла",
-                "data": {
-                    "host": "IP-адрес котла"
-                }
-            }
+  "config": {
+    "abort": {
+      "already_configured": "Этот котёл уже настроен"
+    },
+    "error": {
+      "cannot_connect": "Не удалось подключиться к котлу"
+    },
+    "step": {
+      "user": {
+        "data": {
+          "host": "IP-адрес или имя котла"
         },
-        "error": {
-            "cannot_connect": "Не удалось подключиться к котлу"
-        }
+        "description": "Укажите локальный сетевой адрес котла.",
+        "title": "Подключение Stout Plus"
+      }
     }
+  },
+  "options": {
+    "error": {
+      "cannot_connect": "Не удалось подключиться к котлу"
+    },
+    "step": {
+      "init": {
+        "data": {
+          "host": "IP-адрес или имя котла"
+        },
+        "description": "Измените локальный сетевой адрес котла.",
+        "title": "Сетевой адрес Stout Plus"
+      }
+    }
+  }
 }
