@@ -3,7 +3,7 @@
 from datetime import timedelta
 
 DOMAIN = "stout_plus"
-PLATFORMS = ["climate", "sensor", "select", "time"]
+PLATFORMS = ["binary_sensor", "climate", "number", "sensor", "select", "switch", "time"]
 
 DEFAULT_NAME = "Stout Plus"
 REQUEST_TIMEOUT = 10

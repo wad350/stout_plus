@@ -23,6 +23,8 @@ class StoutPlusTimeDescription(TimeEntityDescription):
 
     source_key: str
     icon: str
+    command: str = "apply_power_day"
+    hour_only: bool = False
 
 
 TIME_ENTITIES: tuple[StoutPlusTimeDescription, ...] = (
@@ -37,6 +39,14 @@ TIME_ENTITIES: tuple[StoutPlusTimeDescription, ...] = (
         name="Day period starts",
         source_key="dayTime",
         icon="mdi:timer-settings",
+    ),
+    StoutPlusTimeDescription(
+        key="anti_legionella_time",
+        name="Anti-legionella cycle starts",
+        source_key="set_time_legionella",
+        icon="mdi:bacteria-outline",
+        command="apply_alig_page",
+        hour_only=True,
     ),
 )
 
@@ -74,6 +84,8 @@ class StoutPlusTime(StoutPlusEntity, TimeEntity):
     def native_value(self) -> time | None:
         value = self.coordinator.data["other"].get(self.entity_description.source_key)
         try:
+            if self.entity_description.hour_only:
+                return time(hour=int(value))
             return time.fromisoformat(str(value))
         except (TypeError, ValueError):
             return None
@@ -81,8 +93,14 @@ class StoutPlusTime(StoutPlusEntity, TimeEntity):
     async def async_set_value(self, value: time) -> None:
         try:
             await self.coordinator.api.async_post_form(
-                "apply_power_day",
-                {self.entity_description.source_key: value.strftime("%H:%M")},
+                self.entity_description.command,
+                {
+                    self.entity_description.source_key: (
+                        str(value.hour)
+                        if self.entity_description.hour_only
+                        else value.strftime("%H:%M")
+                    )
+                },
             )
         except StoutPlusApiError as err:
             raise HomeAssistantError("Could not set the Stout Plus schedule") from err
