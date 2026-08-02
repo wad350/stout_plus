@@ -1,13 +1,13 @@
 {
     "domain": "stout_plus",
     "name": "Stout Plus",
-    "version": "1.1.0",
+    "codeowners": ["@wad350"],
     "config_flow": true,
+    "dependencies": [],
     "documentation": "https://github.com/wad350/stout_plus#readme",
+    "integration_type": "device",
+    "iot_class": "local_polling",
     "issue_tracker": "https://github.com/wad350/stout_plus/issues",
     "requirements": [],
-    "dependencies": [],
-    "codeowners": ["@wad350"],
-    "iot_class": "local_polling",
-    "integration_type": "device"
+    "version": "1.1.0"
 }
