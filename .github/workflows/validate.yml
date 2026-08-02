@@ -37,7 +37,7 @@ jobs:
           pytest-homeassistant-custom-component==0.13.348
           pytest==9.0.3
       - name: Run integration tests
-        run: pytest -q
+        run: PYTHONPATH=. pytest -q
 
   hacs:
     name: HACS
