@@ -8,6 +8,7 @@ from homeassistant.components.select import SelectEntity, SelectEntityDescriptio
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .api import StoutPlusApiError
@@ -63,6 +64,7 @@ INDEX_SELECTS: tuple[StoutPlusIndexSelectDescription, ...] = (
         command="change_outtrg",
         options=("22", "25", "30", "35", "40", "45", "50", "55", "60"),
         icon="mdi:chart-bell-curve-cumulative",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusIndexSelectDescription(
         key="external_management",
@@ -72,6 +74,7 @@ INDEX_SELECTS: tuple[StoutPlusIndexSelectDescription, ...] = (
         command="switch_manage",
         options=("disabled", "opentherm", "thermostat"),
         icon="mdi:connection",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusIndexSelectDescription(
         key="remote_control_source",
@@ -81,6 +84,7 @@ INDEX_SELECTS: tuple[StoutPlusIndexSelectDescription, ...] = (
         command="mqtt_rem_src",
         options=("application", "telegram"),
         icon="mdi:remote",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusIndexSelectDescription(
         key="warning_sound",
@@ -90,6 +94,7 @@ INDEX_SELECTS: tuple[StoutPlusIndexSelectDescription, ...] = (
         command="switch_voice",
         options=("off", "on"),
         icon="mdi:volume-high",
+        entity_category=EntityCategory.CONFIG,
     ),
 )
 
@@ -103,6 +108,7 @@ FORM_SELECTS: tuple[StoutPlusFormSelectDescription, ...] = (
         options=("60_c", "70_c"),
         payload_values=("60°C", "70°C"),
         icon="mdi:thermometer-high",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusFormSelectDescription(
         key="anti_legionella_weekday",
@@ -128,6 +134,7 @@ FORM_SELECTS: tuple[StoutPlusFormSelectDescription, ...] = (
             "Воскресенье",
         ),
         icon="mdi:calendar-week",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusFormSelectDescription(
         key="pump_overrun",
@@ -143,6 +150,7 @@ FORM_SELECTS: tuple[StoutPlusFormSelectDescription, ...] = (
         ),
         index_mask=0x7F,
         icon="mdi:pump",
+        entity_category=EntityCategory.CONFIG,
     ),
 )
 
@@ -161,12 +169,14 @@ SELECTS: tuple[StoutPlusSelectDescription, ...] = (
         translation_key="power_day",
         source_key="amountActiveLevelsPerDay",
         icon="mdi:flash",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusSelectDescription(
         key="power_night",
         translation_key="power_night",
         source_key="amountActiveLevelsAtNight",
         icon="mdi:weather-night",
+        entity_category=EntityCategory.CONFIG,
     ),
 )
 
@@ -289,6 +299,7 @@ class StoutPlusDhwPowerSelect(StoutPlusEntity, SelectEntity):
     _attr_translation_key = "dhw_power"
     _attr_icon = "mdi:water-boiler"
     _endpoint = "main"
+    _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(self, coordinator: StoutPlusCoordinator, entry_id: str) -> None:
         super().__init__(coordinator, entry_id)

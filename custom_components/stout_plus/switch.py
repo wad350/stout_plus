@@ -6,6 +6,7 @@ from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .api import StoutPlusApiError
@@ -78,6 +79,7 @@ class StoutPlusAntiLegionellaSwitch(StoutPlusSwitch):
     _attr_translation_key = "anti_legionella"
     _attr_icon = "mdi:bacteria-outline"
     _endpoint = "other"
+    _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(self, coordinator: StoutPlusCoordinator, entry_id: str) -> None:
         super().__init__(coordinator, entry_id)

@@ -11,6 +11,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .api import StoutPlusApiError
@@ -40,6 +41,7 @@ NUMBERS: tuple[StoutPlusNumberDescription, ...] = (
         native_step=0.1,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         icon="mdi:water-thermometer",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusNumberDescription(
         key="temperature_hysteresis_setting",
@@ -52,6 +54,7 @@ NUMBERS: tuple[StoutPlusNumberDescription, ...] = (
         native_step=0.1,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         icon="mdi:thermometer-lines",
+        entity_category=EntityCategory.CONFIG,
     ),
 )
 

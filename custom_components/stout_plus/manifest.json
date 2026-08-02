@@ -9,7 +9,7 @@
     "iot_class": "local_polling",
     "issue_tracker": "https://github.com/wad350/stout_plus/issues",
     "requirements": [],
-    "version": "1.3.1",
+    "version": "1.3.2",
     "zeroconf": [
         {
             "name": "stoutplus_*",

@@ -9,6 +9,7 @@ from homeassistant.components.time import TimeEntity, TimeEntityDescription
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .api import StoutPlusApiError
@@ -33,12 +34,14 @@ TIME_ENTITIES: tuple[StoutPlusTimeDescription, ...] = (
         translation_key="night_time",
         source_key="nightTime",
         icon="mdi:timer-settings-outline",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusTimeDescription(
         key="day_time",
         translation_key="day_time",
         source_key="dayTime",
         icon="mdi:timer-settings",
+        entity_category=EntityCategory.CONFIG,
     ),
     StoutPlusTimeDescription(
         key="anti_legionella_time",
@@ -47,6 +50,7 @@ TIME_ENTITIES: tuple[StoutPlusTimeDescription, ...] = (
         icon="mdi:bacteria-outline",
         command="apply_alig_page",
         hour_only=True,
+        entity_category=EntityCategory.CONFIG,
     ),
 )
 

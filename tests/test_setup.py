@@ -7,6 +7,7 @@ from __future__ import annotations
 from unittest.mock import AsyncMock, patch
 
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.translation import async_get_translations
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
@@ -131,7 +132,28 @@ async def test_setup_all_platforms(hass, enable_custom_integrations) -> None:
         assert pressure is not None and pressure.state == "1.75"
         assert power is not None and power.state == "0.0"
 
-        by_unique_id = {entity.unique_id: entity.entity_id for entity in entities}
+        entries_by_unique_id = {entity.unique_id: entity for entity in entities}
+        by_unique_id = {
+            unique_id: entity.entity_id
+            for unique_id, entity in entries_by_unique_id.items()
+        }
+
+        assert (
+            entries_by_unique_id[
+                f"{DOMAIN}_{entry.entry_id}_operating_mode"
+            ].entity_category
+            is None
+        )
+        assert (
+            entries_by_unique_id[f"{DOMAIN}_{entry.entry_id}_power_day"].entity_category
+            is EntityCategory.CONFIG
+        )
+        assert (
+            entries_by_unique_id[
+                f"{DOMAIN}_{entry.entry_id}_controller_firmware"
+            ].entity_category
+            is EntityCategory.DIAGNOSTIC
+        )
 
         await hass.services.async_call(
             "climate",

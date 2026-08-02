@@ -91,6 +91,7 @@ BINARY_SENSORS: tuple[StoutPlusBinarySensorDescription, ...] = (
         source_key="PmpStat",
         value_kind="pump",
         device_class=BinarySensorDeviceClass.RUNNING,
+        entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
     ),
     StoutPlusBinarySensorDescription(
